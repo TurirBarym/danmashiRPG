@@ -1,13 +1,12 @@
 package danmashiRPG;
 // Klasse, die allen Charakteren und Monstern zugrundeliegt
 
-import java.util.Random;
-
-public class Charakter 
+public class LivingThing
 {
-	Random randomGenerator = new Random();
+
 	
 	// Attribute
+	private String Name; 		// Name
 	private int Strength;		// Stärke Attribut
 	private int Agility;		// Agilitäts Attribut
 	private int HitPoints;		// Lebenspunkte
@@ -15,8 +14,9 @@ public class Charakter
 	
 	
 	// Constructor
-	public Charakter(int str, int agi, int hp, int bd)
+	public LivingThing(String name, int str, int agi, int hp, int bd)
 	{
+		Name = name;
 		Strength = str;
 		Agility = agi;
 		HitPoints = hp;
@@ -24,6 +24,47 @@ public class Charakter
 	}
 	
 	// Methoden
+	public int useAttribute(int index)
+	{
+		int result = UsefullStuff.throwDice(100, 1);
+		int successRate = 0;
+		int attribute;
+		switch(index)
+		{
+		case 1:
+			attribute = Strength;
+			break;
+		default:
+			attribute = Agility;
+			break;
+		}
+		if (attribute > 100)
+		{
+			successRate = (attribute-100)/10;
+			attribute = 100;
+		}
+		if (result > attribute || result > 95)
+		{
+			return -1;
+		}
+		if (result < 6)
+		{
+			successRate++;
+		}
+		successRate += (attribute-result)/10;
+		return successRate;	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// set Methoden mit Kontrolle
 	public void setStrength( int str)
 	{
@@ -70,47 +111,5 @@ public class Charakter
 	{
 		return BaseDamage;
 	}
-	
-	
-	// kampfmethoden
-	public int attack()
-	{
-		int diceRoll = randomGenerator.nextInt(99)+1;
-		int erfolgsGrad;
-		
-		if(diceRoll < Strength)
-		{
-			erfolgsGrad = (Strength - diceRoll)/10;
-			return BaseDamage + erfolgsGrad;
-		}else
-		return 0;
-		
-	}
-	
-	public boolean dodge(int gt) 			// returnwert von 0 -> nicht ausgewichen
-	{
-		int diceRoll = randomGenerator.nextInt(99)+1;
-		int erfolgsGrad;
-		
-		if(diceRoll < Agility)
-		{
-			erfolgsGrad = (Agility - diceRoll)/10 ;
-			if(erfolgsGrad >= gt)
-			{
-				return true;
-			}
-			else
-				return false;
-		}
-		else
-			return false;
-	}
-
-	public boolean reduceHP(int damage)		// returnwert von false -> tot
-	{
-		HitPoints -= damage;
-		return (HitPoints > 0);
-	}
-	
 	
 }
