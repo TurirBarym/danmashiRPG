@@ -14,15 +14,28 @@ public class LivingThing
 	private int BaseDamage;		// Standartschaden
 	
 	
+	// Default Construktor
+	public LivingThing()
+	{
+		Name = "Ding";
+		Strength = 0;
+		Agility = 0;
+		HitPoints = 0;
+		HitPointsMax = 0;
+		BaseDamage = 0;
+		
+	}
+	
 	// Constructor
 	public LivingThing(String name, int str, int agi, int hp, int bd)
 	{
 		Name = name;
 		Strength = str;
 		Agility = agi;
+		HitPoints = hp;
 		HitPointsMax = hp;
 		BaseDamage = bd;
-		HitPoints = hp;
+		
 	}
 	
 	// Methoden
@@ -142,6 +155,11 @@ public class LivingThing
 	{
 		if(hp > 0 && hp < 1000)
 			HitPointsMax = hp;
+	}
+	public void setHitPoints( int hp)
+	{
+		if(hp > 0 && hp < 1000)
+			HitPoints = hp;
 	}
 	
 	public void setBaseDamage( int bd)
