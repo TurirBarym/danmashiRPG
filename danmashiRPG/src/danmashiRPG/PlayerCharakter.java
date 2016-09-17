@@ -86,7 +86,7 @@ public class PlayerCharakter extends LivingThing
 	
 	 /**
 	  * 
-	    * Does it work?
+	    * Standart Attributs tests
 	    * @param index benutzt für die auswahl des Attributs
 	    * @param index Reihenfolge: 1 = str, 2 = dex, 3 = end, 4 = magic, 5 = agi
 	    * @return anzahl der erfolgsgrade, -1 -> fehlschlag
@@ -158,7 +158,20 @@ public class PlayerCharakter extends LivingThing
 		System.out.println();
 	}
 	
-	
+	/**
+	 * Gibt Valis vom Charakter an seine Familia weiter
+	 * @param val
+	 */
+	public void payFamilia(int val)
+	{
+		if(Valis > val)
+		{
+			Familia.income(val);
+			Valis -= val;
+		}else
+			System.out.println("Der Charakter besitzt nicht so viel");
+		
+	}
 	
 	
 	

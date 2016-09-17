@@ -1,6 +1,10 @@
 package danmashiRPG;
 // Klasse, die allen Charakteren und Monstern zugrundeliegt
-
+/**
+ * @use Die Klasse dient als Grundklasse für Spieler, NSCs und Monster
+ * @author Robin H.
+ *
+ */
 public class LivingThing
 {
 
@@ -26,7 +30,14 @@ public class LivingThing
 		
 	}
 	
-	// Constructor
+	/**
+	 * 
+	 * @param name Wird benutzt um den Namen des Objekts festzulegen
+	 * @param str  Attribut, das für Angriffe verwendet wird, werte zwischen 1 & 999 sind gültig
+	 * @param agi  Attribut, das für Initiative und Ausweichen benutz wird, werte zwischen 1 & 999 sind gültig
+	 * @param hp   Lebenspunkte
+	 * @param bd   Grundschaden, der beim Angriff durch Erfolgsgrade modifiziert wird
+	 */
 	public LivingThing(String name, int str, int agi, int hp, int bd)
 	{
 		Name = name;
@@ -40,7 +51,11 @@ public class LivingThing
 	
 	// Methoden
 	
-	
+	/**
+	 * 
+	 * @param index kann 1 oder rest annehmen, 1 = Str, rest = agi
+	 * @return Gibt anzahl an erfolgsgraden zurück, -1 heißt Fehlschlag
+	 */
 	public int useAttribute(int index)	// Standartmethode für Proben -> Rückgabe = Erfolgsgrade / -1 -> Fehlschlag
 	{
 		int result = UsefullStuff.throwDice(100, 1);
@@ -72,10 +87,12 @@ public class LivingThing
 		return successRate;	
 	}
 	
-	/* 	verwendet, für schaden und heilung / rückgabewert true -> ziel lebt noch | false -> ziel ist tot
-	 	baseDamage des Angreifers, wenn negativ -> Heilung | bei Heilung successes = 0 annehmen 
-	 * 	und gesammte Heilung als negativer bD  
-	 * 	wenn das leben verändert wird, wird lebensanzeige benutzt
+	/**
+	 * Benutzt für Verletzungen und Heilung
+	 * Ruft healtBar auf um aktuelles Leben anzuzeigen
+	 * @param bD gibt den Grundschaden des Gegners an, wird bD negativ gewählt, wird geheilt.
+	 * @param success gibt die anzahl der Erfolge des Angreifers an, bei heilung wird 0 angenommen
+	 * @return true: Ziel lebt noch | false: Ziel ist tot
 	 */
 	public boolean changeHealth(int bD , int success) 
 	{
@@ -91,10 +108,11 @@ public class LivingThing
 	}
 	
 	
-	/*	Dodge methode, verwendet wenn einem angriff ausgewichen werden soll
-	 * 	success = erfolge des Angreifers, 
-	 * Rückgabewert: true -> ausgewichen -> kein Schaden
-	 * false -> schaden
+	/**
+	 * Ausweichen nach erfolgreichem Angriff
+	 * @param success gibt an mit wie vielen Efolgsgraden der Feind trifft
+	 * @param bD gibt den Grundschaden des Feindes an
+	 * @return true: ausgewichen, kein schaden | false: nicht ausgewichen, schaden verursacht -> ruft changeHealth auf
 	 */
 	public boolean dodge(int success, int bD)
 	{
