@@ -6,6 +6,8 @@ public class PlayerCharakter extends LivingThing
 	private String Race;
 	private String Skill;
 	private String Spells;
+	private String FamiliaName;
+	private Familia Familia;
 	
 	// Level
 	private int Level;
@@ -44,10 +46,12 @@ public class PlayerCharakter extends LivingThing
 		ExhaustionMax = 0;
 		AttackSpeed = 0;
 		Spells = "Firebolt";
+		Familia = new Familia();
+		FamiliaName = Familia.getName();
 	}
 	
 	// Construktor
-	public PlayerCharakter(String name, String race, int str, int dex, int end, int agi, int mag, String equip, int valis, int sg, int bd , String spell  )
+	public PlayerCharakter(String name, String race, int str, int dex, int end, int agi, int mag, String equip, int valis, int sg, int bd , String spell, String nameF, String  god, int members, int property, int maintenance, boolean dailyUpdate  )
 	{
 		
 		super(name, str, agi, 0 , bd);	// aufruf construktor livingthing
@@ -72,13 +76,24 @@ public class PlayerCharakter extends LivingThing
 		
 		// attackspeed berechnen
 		AttackSpeed = 1 + super.getAgility()/100;
+		
+		//Familia
+		Familia = new Familia( nameF,  god,  members,  property,  maintenance,  dailyUpdate);
+		FamiliaName = Familia.getName();
 	}
 
 	
-	@Override
+	
+	 /**
+	  * 
+	    * Standart Attributs tests
+	    * @param index benutzt für die auswahl des Attributs
+	    * @param index Reihenfolge: 1 = str, 2 = dex, 3 = end, 4 = magic, 5 = agi
+	    * @return anzahl der erfolgsgrade, -1 -> fehlschlag
+	    */
 	public int useAttribute(int index) 	// methoden.rtf enthält reihenfolge
 	{
-		//  Auto-generated method stub
+		
 		int result = UsefullStuff.throwDice(100, 1);
 		int successRate = 0;
 		int attribute;
@@ -120,7 +135,7 @@ public class PlayerCharakter extends LivingThing
 	@Override
 	public void showStats() 
 	{
-		System.out.println(" Name: " + super.getName() + "    Rasse: " + Race);
+		System.out.println(" Name: " + super.getName() + "    Rasse: " + Race + "    " + FamiliaName);
 		System.out.println(" Lebenskraft: " + Integer.toString(super.getHitPoints()) + " / " + Integer.toString(super.getHitPointsMax()));
 		System.out.println(" Erschöpfung: " + Integer.toString(Exhaustion) + " / " + Integer.toString(ExhaustionMax));
 		System.out.println(" Grundschaden: " + Integer.toString(super.getBaseDamage()));
@@ -143,7 +158,20 @@ public class PlayerCharakter extends LivingThing
 		System.out.println();
 	}
 	
-	
+	/**
+	 * Gibt Valis vom Charakter an seine Familia weiter
+	 * @param val
+	 */
+	public void payFamilia(int val)
+	{
+		if(Valis > val)
+		{
+			Familia.income(val);
+			Valis -= val;
+		}else
+			System.out.println("Der Charakter besitzt nicht so viel");
+		
+	}
 	
 	
 	
