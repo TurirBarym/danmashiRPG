@@ -35,6 +35,9 @@ public class Familia
 	}
 
 	
+	/**
+	 *  Gibt Valis vom familia Konto aus um Grundversorgung zu leisten
+	 */
 	public void payMaintenance()
 	{
 		Property -= Maintenance;
@@ -46,13 +49,21 @@ public class Familia
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * @param val kann positiv oder negativ sein
+	 * positiv: geld geht an die familia 
+	 * negativ: geld wird abgebucht.
+	 */
 	public void income(int val)
 	{
 		Property += val;
 	}
 	
-	// andere Mitglieder der Familia verdienen auch Geld
+	/**
+	 * Andere Familiamitglieder generieren auch geld, das wird direkt auf das
+	 * Familia Konto geleitet, pro member neben dem SC wird w6* (w6*10 valis) generiert
+	 */
 	public void generateIncome()
 	{
 		int income = 0;
